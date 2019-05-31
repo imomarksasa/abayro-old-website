@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+<% include ../head %>
+</head>
+<body id="result">
+<%- include('../nav.ejs', {active: "home"}) %>
+              <!-- Abayro CONTENT -->
+              <div class="jumbotron jumbotron-fluid abayro-land-jumbotron" style="border-bottom: 5px solid rgb(0, 102, 255)">
+              <div class="container">
+                  <div class="text-center">
+                    <h1 class="display-3 bold animated bounceInDown" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">أبايرو</h1>
+                    <p class="lead bold animated bounceInUp" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">أفضل وأقوى بوت عربي في الديسكورد</p>
+                    <p style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);font-size: 13.5px" class="animated bounceInUp">بوت قوي, مميز, متعدد اللغات ويساعدك في:</p>
+                    <section class="AnimatedText">
+                      <div>اشراف السيرفر</div>
+                      <div>حماية السيرفر</div>
+                      <div>المستويات والنقاط</div>
+                  </section>
+                  <small>ويوجد به أكثر من 20 ميزة</small><br><br>
+                  <% if(!user) { %>
+                  <a href="/login"><button class="btn btn-raised btn-primary"><i class="fab fa-discord"></i> الدخول بإستخدام ديسكورد</button></a>
+                  <% } else { %>
+                    <a href="/dashboard"><button class="btn btn-raised btn-primary">
+                      <i class="fas fa-laptop-code"></i> الذهاب الى لوحة التحكم
+                      </button></a>
+                    <%} %>
+                  <a href="/invite"><button class="btn btn-raised btn-primary"><i class="fas fa-link"></i> اضفني الى سيرفرك</button></a>
+
+                  </div>
+                </div>
+              </div>
+              <div class="container animated bounceInUp">
+                <div class="text-center">
+                    <h4><strong>لماذا Abayro؟</strong></h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4">
+                        <h1><i class="feature-icon fas fa-shield-alt"></i></h1>
+                        <h5 style="font-size: 20px;">الحماية</h5>
+                        <h6 style="font-size: 15px">ابايرو لديه اقوى نظام حماية
+                        لحماية السيرفر الخاص بك من المتطفلين</h6>
+                        </div>
+                        <div class="col-lg-4">
+                        <h1><i class="feature-icon fas fa-users"></i></h1>
+                        <h5 style="font-size: 20px;">المستويات و النقاط</h5>
+                        <h6 style="font-size: 15px">ابايرو به نظام مستويات ونقاط مميز
+                        يمكنك من خلاله رؤية النقاط العامة والخاصة بسيرفرك
+                        </h6>
+                        </div>
+                        <div class="col-lg-4">
+                        <h1><i class="feature-icon fas fa-laptop-code"></i></h1>
+                        <h5 style="font-size: 20px;">لوحة تحكم</h5>
+                        <h6 style="font-size: 15px">لوحة تحكم سهلة وبسيطة!
+                        تسهل عليك استخدام وتعديل خصائص ابــايــرو !</h6>
+                        </div>
+                        </div>
+                </div>
+                <hr>
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h5 style="font-size: 20px;"><strong><i class="fas fa-heart"></i></strong> متواجد بـ :</h5>
+                        <h6 style="font-size: 15px"><strong><span class="counter" data-count="<%= guildCount %>"></span></strong> سيرفر</h6>
+                        </div>
+                        <div class="col-md-4">
+                        <h5 style="font-size: 20px;"><strong><i class="fas fa-users"></i></strong> يَخدم أكثر من :</h5>
+                        <h6 style="font-size: 15px"><strong><span class="counter" data-count="<%= usersCount %>"></span></strong> مستخدم</h6>
+                        </div>
+                        <div class="col-md-4">
+                        <h5 style="font-size: 20px;"><strong><i class="fas fa-code"></i></strong> نَفذت :</h5>
+                        <h6 style="font-size: 15px"><strong><span class="counter" data-count="100"></span></strong> أمر</h6>
+                        </div> 
+                </div>
+              </div>
+  
+<% include ../footer %>
+
+<% include ../scripts %>
+
+</body>
+
+</html>

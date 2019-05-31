@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+<head>
+<% include ../head %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.css">
+  <title>Abayro - <%= guild.name %></title>
+</head>
+
+<body class="">
+  <% for(let i = 0; i < bot.length; i++) { %>
+<section id="main" class="page-wrapper">
+<div class="header-manage dashboard-sidenav">
+<div class="container">
+<div class="row">
+<div class="col-sm-2">
+<div class="col-sm-5 text-center">
+<img style="border-radius: 200px;" width="120" height="120" src="<%= guild.iconURL %>"></div>
+</div>
+<div class="col-sm-10">
+<h2>Welcome to <%= guild.name %> page</h2>
+<p>Here you can see guild members & stats & edit your account in <strong><%= guild.name %></strong></p>
+</div>
+</div>
+</div>
+</div>
+<section data-aos="fade-up" data-aos-duration="1500" class="home-section">
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 custom-styled">
+<div class="nav flex-column nav-pills dashboard-sidenav" style="border: 4px solid #0097e6;">
+<a class="nav-link active show" data-toggle="tab" href="#home"><i class="fas fa-home"></i> Home</a>
+<a class="nav-link" data-toggle="tab" href="#guild_members"><i class="fas fa-cogs"></i> <%= guild.name %> members<a>
+<a class="nav-link" data-toggle="tab" href="#guild_stats"><i class="fas fa-palette"></i> <%= guild.name %> stats</a>
+<a class="nav-link" data-toggle="tab" href="#manage_acc"><i class="fas fa-terminal"></i> Manage your account in <%= guild.name %></a>
+</div>
+</div>
+    
+<div class="col-md-9 dashboard-sidenav" style="border: 4px solid #0097e6;">
+  <div>
+        <div class="tab-content panel panel-body">
+        <input id="guildId" value="<%= guild.id %>" type="hidden">
+      <div id="home" class="tab-pane active"><br>
+      <h3><strong>Home</strong></h3><br>
+      <p>
+        Welcome to <strong><%= guild.name %></strong> page<br>Here you can see guild members & stats & edit your account in the guild
+      </p>
+    </div>
+      
+<div id="guild_members" class="tab-pane fade">
+  <table class="table table-responsive-sm">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% guild.members.forEach(mem => { %>
+    <% if(mem.user.bot) return;%>
+    <tr>
+      <td><a href="#" data-toggle="modal" data-target="#exampleModalCenter"><%= mem.user.tag %> <span class="badge badge-primary">click for more Info</span></a></td>
+      <td><span class="b-<%= mem.presence.status %>"><%= mem.presence.status %></span></td>
+    </tr>
+    <!-- MODAL -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">UserInfo for <%= mem.user.tag %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%
+        			let game;
+			if (mem.presence.game !== null) {
+				game = mem.presence.game.name;
+			} else {
+				game = 'Not playing';
+      } 
+        %>
+        
+        <% 			let roles;
+			if (mem.roles.size === 1) {
+				roles = '`None`';
+			} else {
+				roles = mem.roles.map(role => `${role.name}`).slice(1).join(', ');
+			} %>
+        <p>
+          <strong>Name</strong>: <code><%= mem.user.username %></code> <strong>Displayname</strong>: <code><%= mem.user.tag %></code>
+        </p>
+                <p>
+          <strong>Nickname</strong>: <code><%= mem.nickname === null ? 'None' : mem.nickname %></code> <strong>ID</strong>: <code><%= mem.id %></code>
+        </p>
+        <p>
+          <strong>Discrim</strong>: <code>#<%= mem.user.discriminator %></code> <strong>Playing status</strong>:  <code><%= game %></code>
+        </p>
+        <p>
+          <strong>CreatedAt</strong>: <code><%= bot[i].moment(mem.user.createdAt).format('D/M/YYYY h:mm a') %></code>
+        </p>
+        <p>
+          <strong>Roles</strong>: <code><%= roles %></code>
+        </p>
+        <hr>
+        <h5>
+          Admin mode
+        </h5>
+        <hr>
+<div class="inline-buttons">
+  <% if(guild.members.get(bot[i].user.id).hasPermissions('BAN_MEMBERS')){ %>
+  <button type="button" class="btn btn-danger">
+    Ban <%= mem.user.tag %>
+  </button>
+  <button type="button" class="btn btn-warning">
+    Kick <%= mem.user.tag %>
+  </button>
+  <% } else {%>
+  <button type="button" class="btn btn-danger disabled">
+    Ban <%= mem.user.tag %>
+  </button>
+    <button type="button" class="btn btn-warning disabled">
+    Kick <%= mem.user.tag %>
+  </button>
+  <%}%>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- <img style="border-radius: 200px;" width="20" height="20" src="<//%= mem.user.displayAvatarURL %>"> -->
+    <%})%>
+  </tbody>
+</table>
+      </div>
+      
+      <div id="manage_acc" class="container tab-pane fade"><br>
+      <p>coming soon.</p>
+    </div>
+      <div id="guild_stats" class="container tab-pane fade"><br>
+      <p>coming soon.</p>
+    </div>
+    </div>
+  </div>
+    </div>
+  </div>
+          </div>
+        </section>
+    </section>
+  <%}%>
+<% include ../scripts %>
+  <script>
+    $('#saveChanges').click(function(){
+    Swal({
+  title: 'Good job!',
+  text: 'Your changes has been saved',
+  type: 'success',
+  heightAuto: false
+    })
+  })
+    
+  $('#ponot').click(function(){
+  const toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+toast({
+  text: 'You are not subscribed with abayro premium',
+  type: 'error',
+  heightAuto: false
+})
+  })
+  </script>
+  </body>
+</html>

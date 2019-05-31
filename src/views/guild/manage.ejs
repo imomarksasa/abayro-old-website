@@ -1,0 +1,343 @@
+<!doctype html>
+<html>
+
+<head>
+<% include ../head %>
+<style>
+.nav-link {
+    color: #6d7177 !important;
+    margin: 0 5px !important;
+    text-decoration: none;
+    position: relative;
+}
+
+.nav-link:hover{
+    color: #000 !important
+}
+</style>
+<title>Abayro - Manage</title>
+</head>
+
+<body>
+  <% for(let i = 0; i < bot.length; i++) { %>
+  <nav class="navbar navbar-expand-lg navbar-light">
+  <span class="navbar-brand abayro-brand" style="font-family: 'Montserrat' !important"><strong><span class="abayro-brand">A</span><span style="color: rgb(19, 93, 255);">B</span></strong></span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/"><i class="fas fa-home"></i>الرئيسية</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/support"><i class="fas fa-question"></i>سيرفر المساعدة</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="abayroCreditShop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-store"></i>مَتجر أبايرو
+        </a>
+        <div class="dropdown-menu animated bounceIn" aria-labelledby="abayroCreditShop">
+          <a class="dropdown-item" href="#"><i class="fas fa-id-badge"></i> متجر الشارات</a>
+          <a class="dropdown-item" href="#"><i class="fas fa-image"></i> متجر الخلفيات</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i> سوق أبايرو</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a id="leaders" class="nav-link" href="#"><i class="fas fa-users"></i>عَن الفريق</a>
+      </li>
+      <li class="nav-item">
+              <a class="nav-link" id="leaders" href="#"><i class="fas fa-star"></i>الميزات</a>
+      </li>
+      <li class="nav-item">
+      <a id="leaders" class="nav-link" href="/leaderboard/servers"><i class="fas fa-trophy"></i>المتصدرين</a>
+      </li>
+    </ul>
+      <% if(!user) { %>
+    <a href="/login"><button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button></a>
+<% } else { %>
+          <% let format = ".png" || ".gif"; %>
+          <button class="btn btn-sm btn-primary" data-target="#loggedUserModal" id="modal" data-toggle="modal"><img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="20" height="20" style="border-radius: 50px !important;"> مرحبا بك يا <%= user.username %></button>
+          <div class="modal fade bd-example-modal-lg" id="loggedUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body text-center">
+                        <div class="container">
+                          <h4>
+                          مرحبا بك يا <%= user.username %>
+                          <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="50" height="50" style="border-radius: 50px !important;">
+                        </h4>
+                          <hr>
+                        <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/dashboard"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-cogs"></i> الذهاب الى لوحة التحكم</button></a><br>
+                        <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/store"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-shopping-cart"></i> تسوق سوق أبايرو</button></a><br>
+                        <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/users/<%= user.id %>/profile"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-id-badge"></i> رؤية ملفك الشخصي</button></a>
+                        <hr>
+<a href="/logout"><button class="btn btn-danger btn-raised"><i class="fas fa-sign-in-alt"></i> تسجيل الخروج</button></a>
+<a href="#/users/<%= user.id %>/edit"><button class="btn btn-success btn-raised"><i class="fas fa-user"></i> إعدادات حسابك</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<% } %>      
+  </div>
+</nav>
+<div class="jumbotron jumbotron abayro-manage-jumbotron fluid" style="border-bottom: 3px solid rgb(0, 102, 255)">
+<div class="container">
+<div class="row">
+<div class="col-sm-2">
+<div class="col-sm-5 text-center">
+  <%
+    let src;
+    if(guild.iconURL){
+      src=`${guild.iconURL}`
+    } else {
+      src= `https://cdn.glitch.com/21a72fd6-068d-4a10-8e19-b47ca3f12a74%2Fabayro_dark.png?1545879504674`
+    }
+%>
+<img style="border-radius: 200px;" width="120" height="120" src="<%= src %>"></div>
+</div>
+<div class="col-sm-10">
+<h2 style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">مرحبا بك في لوحة تحكم سيرفر <%= guild.name %></h2>
+<p style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">هنا يمكنك تعديل جميع إعدادات ابايرو في <%= guild.name %></p>
+<div class="inline-buttons">
+<a href="/guilds/<%= guild.id %>/leaders" target="_blank">
+<button class="btn btn-success btn-raised">
+<i class="fas fa-users"></i> المتصدرين
+</button>
+</a>
+  
+<a href="/guilds/<%= guild.id %>/reset" target="_blank">
+<button class="btn btn-danger btn-raised">
+<i class="fas fa-trash-alt"></i> اعادة الإعدادات الافتراضية
+</button>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+  <nav class="nav nav-justified nav-pills abayro-nav" style="margin: 10px 10px;">
+    <a class="nav-item nav-link active" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="true"><i class="fas fa-cogs"></i> الاعدادات</a>
+    <a class="nav-item nav-link" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false"><i class="fas fa-users"></i> الأعضاء</a>
+    <a class="nav-item nav-link" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="false"><i class="fab fa-discord"></i> معلومات السيرفر</a>
+    <a class="nav-item nav-link" id="logs-tab" data-toggle="tab" href="#logs" role="tab" aria-controls="logs" aria-selected="false"><i class="fas fa-tasks"></i> السجلات</a>
+
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+    <div class="row">
+    <div class="col-md-3 custom-styled">
+<div class="nav flex-column nav-pills bd-light" style="border: 4px solid #0097e6;">
+<a class="nav-link active show" data-toggle="tab" href="#home"><i class="fas fa-home"></i> الرئيسية</a>
+<a class="nav-link" data-toggle="tab" href="#absettings"><i class="fas fa-cogs"></i> اعدادات ابايرو</a>
+<a class="nav-link" data-toggle="tab" href="#colors"><i class="fas fa-palette"></i> الألوان</a>
+<a class="nav-link" data-toggle="tab" href="#cstmcmds"><i class="fas fa-terminal"></i> الأوامر المخصصة</a>
+<a class="nav-link" data-toggle="tab" href="#welcoming"><i class="fas fa-user-plus"></i> الترحيب</a>
+<a class="nav-link" data-toggle="tab" href="#guildconfig"><i class="fas fa-cog"></i> اعدادات السيرفر</a>
+<a class="nav-link" data-toggle="tab" href="#protection"><i class="fas fa-shield-alt"></i> الحماية</a>
+</div>
+</div>
+    
+<div class="col-md-9 bd-light" style="border: 4px solid #0097e6;">
+  <div>
+        <div class="tab-content panel panel-body">
+        <input id="guildId" value="<%= guild.id %>" type="hidden">
+      <div id="home" class="tab-pane active"><br>
+      <h3><strong>الرئيسية</strong></h3><br>
+      <p>
+        مرحبا بك في لوحة تحكم ابايرو<br>لم يتم الإنتهاء بالكامل من لوحة التحكم بعد...
+      </p>
+    </div>
+
+      <div id="welcoming" class="tab-pane fade"><br>
+      <h3>الترحيب</h3>
+      <p>ستتوفر الميزة قرياً</p>
+    </div>
+      
+    <div id="guildconfig" class="tab-pane fade"><br>
+      <h3>اعدادات السيرفر</h3>
+      <p>ستتوفر الميزة قرياً</p>
+    </div>
+    <div id="protection" class="tab-pane fade"><br>
+      <h3>Pاعدادات السيرفر</h3>
+    <p>ستتوفر الميزة قرياً</p>
+
+    </div>
+      
+<div id="absettings" class="tab-pane fade">
+  <div class="row">
+      <div id="ponot" class="col-md-4 text-center">
+        <br>
+          <img style="border-radius: 200px;" width="120" height="120" src="<%= bot[i].bot.user.avatarURL %>">
+          <form>
+              <div class="form-group">
+                  <label for="formGroupExampleInput" style="margin: 10px 10px;"><strong>الإسم</strong></label>
+                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="<%= bot[i].bot.user.username %>" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="formGroupExampleInput"><strong>Status</strong></label>
+                  <select id="ponot" class="selectpicker show-tick" data-style="btn-primary" disabled>
+                      <option>متصل</option>
+                      <option>مشغول</option>
+                      <option>ممنوع الإزعاج</option>
+                      <option disabled>غير متصل</option>
+                      </select>
+                </div>
+          </form>
+        <p>
+          <strong>مدة انتهاء اشتراك البرميوم:</strong>
+          <p>
+            انت لست مشترك!
+        </p>
+        </p>
+      </div>
+      <div class="col-md-4">
+      <form method="POST">
+      <br>
+      <p><strong>اللغة</strong></p>
+  <select id="ponot" class="selectpicker show-tick" data-style="btn btn-info btn-raised">
+  <option>الإنجليزية - English U.S</option>
+  <option>العربية - اللغة العربية</option>
+  <option>الفرنسية - Francias</option>
+  <option>الألمانية - Deutch</option>
+  <option>التركية - turk</option>
+  </select>
+<br>
+        <p>
+          <strong>بادئة الأوامر</strong>
+        </p>
+                 <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-sm">بادئة جديدة</span>
+                </div>
+                <input type="text" class="form-control" id="newprefix" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                </div>
+      </div>
+      </form>
+  </div>
+                            <div class="text-center">
+            <input id="saveChanges" type="submit" class="btn btn-info btn-raised" value="حفظ الإعدادات" onclick="<%= settings.set(guild.id, 'prefix', '%') %>">
+          </div>
+      </div>
+      
+          <div id="colors" class="container tab-pane fade"><br>
+      <h3>الألوان</h3>
+      <p>ستتوفر الميزة قرياً</p>
+    </div>
+      <div id="cstmcmds" class="container tab-pane fade"><br>
+      <h3>الأوامر المخصصة</h3>
+      <p>ستتوفر الميزة قرياً</p>
+    </div>
+    </div>
+  </div>
+    </div>
+  </div>
+  </div>
+  <div class="tab-pane fade" id="members" role="tabpanel" aria-labelledby="members-tab">
+    <div class="dashboard-sidenav" style="border: 4px solid #0097e6;">
+      <table class="table table-striped table-hover table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">إسم العضو</th>
+      <th scope="col">حالة العضو</th>
+    </tr>
+  </thead>
+  <% guild.members.forEach(mem => { %>
+  <tbody>
+    <tr>
+      <td>
+      <% if(!mem.user.bot) { %>
+        <%= mem.user.tag %>
+        <% } else { %>
+        <%= mem.user.tag %> <div class="badge badge-primary">
+          BOT
+        </div>
+   <% } %>
+      </td>
+
+      <td><div class="b-<%=mem.user.presence.status%> text-center"><%= mem.user.presence.status%></div></td>
+    </tr>
+  </tbody>
+  <%})%>
+</table>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+  <div class="dashboard-sidenav" style="border: 4px solid #0097e6;">
+    <div class="container" style="font-family: 'Roboto'">
+      <br>
+      <%             let region = {
+                "brazil": "البرازيل",
+                "eu-central": "وسط اوروبا",
+                "singapore": "سنغفورا",
+                "us-central": "وسط الولايات المتحدة الأمريكية",
+                "sydney": "سيدني",
+                "us-east": "شرق الولايات المتحدة الأمريكية",
+                "us-south": "جنوب الولايات المتحدة الأمريكية",
+                "us-west": "غرب الولايات المتحدة الأمريكية",
+                "eu-west": "غرب اوروبا",
+                "vip-us-east": "وسط الولايات المتحدة ( خاص )",
+                "london": "لندن",
+                "amsterdam": "امستردام",
+                "hongkong": "هونج كونج",
+                "russia": "روسيا"
+            }; 
+      
+      let verifLevels = ["لا يوجد", "منخفض", "متوسط", "مرتفع", "فائق"];
+      %>
+        <p>
+          <%= bot[i].moment.locale('ar') %>
+      <i class="fas fa-angle-right"></i> <strong>اسم السيرفر:</strong> <%= guild.name %> <code><%= guild.id %></code><br>
+      <i class="fas fa-clock"></i> <strong>انشأ في:</strong> <%= bot[i].moment(guild.createdAt).format('D/M/YYYY h:mm a') %><br>
+      <i class="fas fa-calendar-alt"></i> <strong>لقد انضضمت اليه:</strong> <%= bot[i].moment(user.joinedAt).format('D/M/YYYY h:mm a') %><br>
+      <i class="fas fa-users"></i> <strong>عدد الأعضاء:</strong> <%= guild.memberCount %><br>
+      <i class="fas fa-user"></i> <strong>آخر عضو:</strong> <%= Array.from(guild.members.values()).sort((a, b) => b.joinedAt - a.joinedAt).map(m => m.user.tag).splice(0, 1) %><br>
+      <i class="fas fa-crown"></i> <strong>صاحب السيرفر:</strong> <%= guild.owner.user.tag %><br>
+      <i class="fas fa-list"></i> <strong>القنوات:</strong> <%= guild.channels.filter(m => m.type === 'text').size %> كتابية <strong>-</strong> <%= guild.channels.filter(m => m.type === 'voice').size %> صوتية<br>
+      <i class="fas fa-list-alt"></i> <strong>حامل القنوات:</strong> <%= guild.channels.filter(m=>m.type == 'category').size %><br>
+      <i class="fas fa-dot-circle"></i> <strong>الرتب:</strong> <%= guild.roles.size %><br>
+      <i class="fas fa-globe-africa"></i> <strong>المنطقة:</strong> <%= region[guild.region] %><br>
+      <i class="fas fa-shield-alt"></i> <strong>مستوى الحماية:</strong> <%= verifLevels[guild.verificationLevel] %>
+      </p>
+    </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab">قريبا في التحديث القادم !</div>
+</div>
+          </div>
+  <% include ../footer %>
+<% include ../scripts %>
+  <script>
+    $('#saveChanges').click(function(){
+    Swal({
+  title: 'عمل جيد !',
+  text: 'لقد تم حفظ اعداداتك',
+  type: 'success',
+  heightAuto: false
+    })
+  })
+    
+  $('#ponot').click(function(){
+  const toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000
+});
+
+toast({
+  text: 'انت لست مشترك بأبايرو برميوم',
+  type: 'error',
+  heightAuto: false
+})
+  })
+  </script>
+  <%}%>
+  </body>
+</html>

@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+<% include ../head %>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light">
+                <span class="navbar-brand abayro-brand" style="font-family: 'Montserrat' !important"><strong>A<span style="color: rgb(19, 93, 255);">B</span></strong></span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/"><i class="fas fa-home"></i>الرئيسية</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="/support"><i class="fas fa-question"></i>سيرفر المساعدة</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="abayroCreditShop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-store"></i>متجر ابايرو
+                      </a>
+                      <div class="dropdown-menu animated bounceIn" aria-labelledby="abayroCreditShop">
+                        <a class="dropdown-item" href="#"><i class="fas fa-id-badge"></i> متجر الشارات</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-image"></i> متجر الخلفيات</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#"><i class="fas fa-shopping-cart"></i> سوق الكريدت</a>
+                      </div>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fas fa-users"></i>عَن الفريق</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-star"></i>الميزات</a>
+                    </li>
+                    <li class="nav-item active">
+                    <a class="nav-link" href="/leaderboard/servers"><i class="fas fa-trophy"></i>المتصدرين</a>
+                    </li>
+                  </ul>
+                    <% if(!user) { %>
+                  <a href="/login"><button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button></a>
+          <% } else { %>
+                        <% let format = ".png" || ".gif"; %>
+                        <button class="btn btn-sm btn-primary" data-target="#loggedUserModal" id="modal" data-toggle="modal"><img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="20" height="20" style="border-radius: 50px !important;"> مرحبا بك يا <%= user.username %></button>
+                        <div class="modal fade bd-example-modal-lg" id="loggedUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                      <div class="container">
+                                        <h4>
+                                        مرحبا بك يا <%= user.username %>
+                                        <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="50" height="50" style="border-radius: 50px !important;">
+                                      </h4>
+                                        <hr>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/dashboard"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-cogs"></i> الذهاب الى لوحة التحكم</button></a><br>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/store"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-shopping-cart"></i> تسوق سوق الكريدت</button></a><br>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/users/<%= user.id %>/profile"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-id-badge"></i> رؤية ملفك الشخصي</button></a>
+                                      <hr>
+<a href="/logout"><button class="btn btn-danger btn-raised"><i class="fas fa-sign-in-alt"></i> تسجيل الخروج</button></a>
+<a href="#/users/<%= user.id %>/edit"><button class="btn btn-success btn-raised"><i class="fas fa-user"></i> إعدادات حسابك</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+<% } %>      
+                </div>
+              </nav>
+  
+<!-- Abayro CONTENT -->
+              <div class="jumbotron jumbotron-fluid abayro-manage-jumbotron" style="border-bottom: 5px solid rgb(0, 102, 255)">
+                <div class="container">
+                  <div class="text-center">
+                    <br><br>
+                    <h1 class="display-3 bold animated bounceInDown" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">أعلى المتصدرين</h1>
+                    <p class="lead bold animated bounceInUp" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">أعلى 30 سيرفر متصدر في أبايرو</p>
+                    <small>صفحة رقم 2</small>
+                    <br><br>
+
+                  </div>
+                </div>
+              </div>
+              <div class="container animated bounceInUp">
+                <p>
+                  <strong>ملاحظة:</strong> أبايرو يعرض فقط السيرفرات التي يوجد بها ويعرض أعلى السيرفرات من ناحية النقاط
+                </p>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                    <% const top = bot.guilds.sort((a, b) => a.memberCount - b.memberCount).array().reverse() %>
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[10].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[10].name %></h2>
+                          <p><%= top[10].memberCount %> عضو</p>
+                          <p><%= top[10].memberCount + top[10].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>الحادي عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[10].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[11].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[11].name %></h2>
+                          <p><%= top[11].memberCount %> عضو</p>
+                          <p><%= top[11].memberCount + top[11].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>الثاني عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[11].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[12].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[12].name %></h2>
+                          <p><%= top[12].memberCount %> عضو</p>
+                          <p><%= top[12].memberCount + top[12].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>الثالث عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[12].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[13].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[13].name %></h2>
+                          <p><%= top[13].memberCount %> عضو</p>
+                          <p><%= top[13].memberCount + top[3].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>الرابع عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[13].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[14].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[14].name %></h2>
+                          <p><%= top[14].memberCount %> عضو</p>
+                          <p><%= top[14].memberCount + top[14].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>الخامس عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[14].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[15].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[15].name %></h2>
+                          <p><%= top[15].memberCount %> عضو</p>
+                          <p><%= top[15].memberCount + top[15].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>السادس عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[15].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[16].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[16].name %></h2>
+                          <p><%= top[16].memberCount %> عضو</p>
+                          <p><%= top[16].memberCount + top[16].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>السابع عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[16].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[17].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[17].name %></h2>
+                          <p><%= top[17].memberCount %> عضو</p>
+                          <p><%= top[17].memberCount + top[17].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>الثامن عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[17].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[18].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[18].name %></h2>
+                          <p><%= top[18].memberCount %> عضو</p>
+                          <p><%= top[18].memberCount + top[18].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>التاسع عشر</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[18].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+                <div class="custom-jumbotron">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-sm-2">
+                          <div class="col-sm-5 text-center">
+                          <img style="border-radius: 200px;" width="120" height="120" src="<%= top[19].iconURL %>">
+                        </div>
+                          </div>
+                          <div class="col-sm-10">
+                          <h2 style="font-family: 'Montserrat'"><%= top[19].name %></h2>
+                          <p><%= top[19].memberCount %> عضو</p>
+                          <p><%= top[19].memberCount + top[19].memberCount * 5 %> نقطة</p>
+                          <p>الترتيب: <strong>العشرون</strong></p>
+                          <div class="inline-buttons">
+                          <a href="#/guilds/<%= top[19].id %>/leaders">
+                          <button class="btn btn-success btn-raised">
+                          <i class="fas fa-users"></i> أعلى 10 أعضاء
+                          </button>
+                          </a>
+                            
+                          <a href="#">
+                          <button class="btn btn-primary btn-raised">
+                          <i class="fab fa-discord"></i> رؤية معلوماته
+                          </button>
+                          </a>
+                          </div>
+                          </div>
+                          </div>
+                  </div>
+                </div>
+                <br>
+              </div>
+  
+<center>
+  <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a href="/leaderboard/servers/" class="page-link btn btn-primary">الصفحة السابقة</a>
+    </li>
+    <li class="page-item"><a class="page-link btn" href="/leaderboard/servers">1<span class="sr-only">(current)</span></a></li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link btn btn-primary" href="/leaderboard/servers/2">2</a>
+    </li>
+    <li class="page-item"><a class="page-link btn" href="/leaderboard/servers/3">3</a></li>
+    <li class="page-item">
+      <a class="page-link btn btn-primary" href="#/leaderboard/servers/3">الصفحة التالية</a>
+    </li>
+  </ul>
+  </nav>
+  </center>
+<% include ../footer %>
+
+<% include ../scripts %>
+</body>
+
+</html>

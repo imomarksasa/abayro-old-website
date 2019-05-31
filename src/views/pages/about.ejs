@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+<% include ../head %>
+</head>
+<body id="result">
+<%- include('../nav.ejs', {active: "about"}) %>
+              <!-- Abayro CONTENT -->
+              <div class="jumbotron jumbotron-fluid abayro-manage-jumbotron" style="border-bottom: 5px solid rgb(0, 102, 255)">
+              <div class="container">
+                  <div class="text-center">
+                    <h1 class="display-3 bold animated bounceInDown" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">عَن الفريق</h1>
+                    <p class="lead bold animated bounceInUp" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);" dir="ltr"></p>Abayro is a hobby project that we spend our free time in it</p>
+                    <p style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);font-size: 13.5px" class="animated bounceInUp">أبايرو هو مشروع نعمل عليه كهواية, نقضي العمل عليه في أوقات فراغنا أو بعد الدراسة !</p>
+                  <small class="badge badge-primary">A project by <strong>ABTeam</strong></small><br><br>
+                  </div>
+                </div>
+              </div>
+              <div class="container animated bounceInUp">
+                <div class="text-center">
+                    <h4><strong>فريق المطورين</strong></h4>
+                    <hr>
+                    <div class="row">
+                    <% abdevs.forEach(dev => { %>
+                        <div class="col-lg-4">
+                        <img src="<%= dev.user.displayAvatarURL %>" height="75" width="75" style="border-radius: 500px !important;border: 3px solid #00a8ff;box-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">
+                       <h5 style="font-size: 20px;margin: 10px 0;"><%= dev.user.username %>#<strong><%= dev.user.discriminator %></strong></h5>
+                      <% let devinfo; 
+                      if (dev.id === '354716386716811264') { 
+                        devinfo = ['مطور البوت', 'مطور الموقع']
+                      } else if (dev.id === '171259176029257728') { 
+                        devinfo = ['مطور البوت', 'مطور الموقع']
+                      } else {
+                        devinfo = ['مطور البوت']
+                      }
+                      %>
+                      <h6 style="font-size: 15px"><%= devinfo[0] %><% if(devinfo[1]) {%><br><%= devinfo[1] %><%}%></h6>
+                        </div>
+                        <% }) %>
+                </div>
+                <hr>
+                <h4><strong>فريق المساعدة</strong></h4>
+                <hr>
+                <div class="row text-center">
+                <% abteam.forEach(tm => { %>
+                    <div class="col-md-4">
+                    <img src="<%= tm.user.displayAvatarURL %>" height="75" width="75" style="border-radius: 500px !important;border: 3px solid #00a8ff;box-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">
+                        <h5 style="font-size: 20px;margin: 10px 0;"><%= tm.user.username %>#<strong><%= tm.user.discriminator %></strong></h5>
+                        <% let tminfo; 
+                        if (tm.roles.has('528012803961782272')) { 
+                          tminfo = 'مساعد و مشرف'
+                        } else { 
+                          tminfo = 'مساعد'
+                        }
+                        %>
+                        <h6 style="font-size: 15px"><%= tminfo %></h6>
+                        </div>
+                        <% }) %>
+                </div>
+                <hr>
+                <h4><strong>المساهمين</strong></h4>
+                <hr>
+                <div class="row text-center">
+                <% contribs.forEach(cb => { %>
+                <div class="col-md-4">
+                <img src="<%= cb.user.displayAvatarURL %>" height="75" width="75" style="border-radius: 500px !important;border: 3px solid #00a8ff;box-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">
+                    <h5 style="font-size: 20px;margin: 10px 0;"><%= cb.user.username %>#<strong><%= cb.user.discriminator %></strong></h5>
+                    <h6 style="font-size: 15px">مساهم</h6>
+                    </div>
+                    <% }) %>
+                </div>
+              </div>
+  
+<% include ../footer %>
+
+<% include ../scripts %>
+
+</body>
+
+</html>

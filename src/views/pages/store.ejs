@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+<% include ../head %>
+<title>Abayro - Store</title>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light">
+                <span class="navbar-brand abayro-brand" style="font-family: 'Montserrat' !important"><strong>A<span style="color: rgb(19, 93, 255);">B</span></strong></span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/"><i class="fas fa-home"></i>الرئيسية</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="/support"><i class="fas fa-question"></i>سيرفر المساعدة</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="abayroCreditShop" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-store"></i>متجر ابايرو
+                      </a>
+                      <div class="dropdown-menu animated bounceIn" aria-labelledby="abayroCreditShop">
+                        <a class="dropdown-item" href="/store/badges"><i class="fas fa-id-badge"></i> متجر الشارات</a>
+                        <a class="dropdown-item" href="/store/backgrounds"><i class="fas fa-image"></i> متجر الخلفيات</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item active" href="/store"><i class="fas fa-shopping-cart"></i> سوق الكريدت</a>
+                      </div>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#"><i class="fas fa-users"></i>عَن الفريق</a>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-star"></i>الميزات</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="/leaderboard/servers"><i class="fas fa-trophy"></i>المتصدرين</a>
+                    </li>
+                  </ul>
+                    <% if(!user) { %>
+                  <a href="/login"><button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button></a>
+          <% } else { %>
+                        <% let format = ".png" || ".gif"; %>
+                        <button class="btn btn-sm btn-primary" data-target="#loggedUserModal" id="modal" data-toggle="modal"><img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="20" height="20" style="border-radius: 50px !important;"> مرحبا بك يا <%= user.username %></button>
+                        <div class="modal fade bd-example-modal-lg" id="loggedUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                      <div class="container">
+                                        <h4>
+                                        مرحبا بك يا <%= user.username %>
+                                        <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="50" height="50" style="border-radius: 50px !important;">
+                                      </h4>
+                                        <hr>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/dashboard"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-cogs"></i> الذهاب الى لوحة التحكم</button></a><br>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/store"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-shopping-cart"></i> تسوق سوق الكريدت</button></a><br>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/users/<%= user.id %>/profile"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-id-badge"></i> رؤية ملفك الشخصي</button></a>
+                                      <hr>
+<a href="/logout"><button class="btn btn-danger btn-raised"><i class="fas fa-sign-in-alt"></i> تسجيل الخروج</button></a>
+<a href="#/users/<%= user.id %>/edit"><button class="btn btn-success btn-raised"><i class="fas fa-user"></i> إعدادات حسابك</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+<% } %>      
+                </div>
+              </nav>
+  
+              <!-- Abayro CONTENT -->
+              <div class="jumbotron jumbotron-fluid abayro-land-jumbotron" style="border-bottom: 5px solid rgb(0, 102, 255)">
+                <div class="container">
+                  <div class="text-center">
+                    <h1 class="display-3 bold animated bounceInDown" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">سوق أبايرو</h1>
+                    <p class="lead bold animated bounceInUp" style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);">مرحبا بك في سوق أبايرو يا <%= user.username %></p>
+                    <p style="text-shadow: 0 0 20px rgba(0, 0, 0, 0.521);font-size: 13.5px" class="animated bounceInUp">هنا يمكنك شراء, بيع, عرض, حذف المنتجات الخاصة بك ! بعملة أبايرو</p>
+                  <small class="badge badge-success">BETA STORE</small><br>
+                    <button class="btn btn-primary" data-target="#shopUserSettings" id="modal" data-toggle="modal">
+<i class="fas fa-shopping-cart"></i>
+                      إعدادت حسابك في سوق أبايرو
+                    </button>
+                 <% let format = ".png" || ".gif"; %>
+                <div class="modal fade bd-example-modal-lg " id="shopUserSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                      <div class="container">
+                                        <h4>
+                                        مرحبا بك يا <%= user.username %>
+                                        <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %><% format %>?size=2048" width="50" height="50" style="border-radius: 50px !important;">
+                                      </h4>
+                                        <hr>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/dashboard"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-cogs"></i> الذهاب الى لوحة التحكم</button></a><br>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/store"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-shopping-cart"></i> تسوق سوق الكريدت</button></a><br>
+                                      <a style="font-family: 'JF Flat Regular';font-weight: bold" href="#/users/<%= user.id %>/profile"><button class="btn btn-primary btn-raised btn-block blue-gradient-2"><i class="fas fa-id-badge"></i> رؤية ملفك الشخصي</button></a>
+                                      <hr>
+<a href="/logout"><button class="btn btn-danger btn-raised"><i class="fas fa-sign-in-alt"></i> تسجيل الخروج</button></a>
+<a href="#/users/<%= user.id %>/edit"><button class="btn btn-success btn-raised"><i class="fas fa-user"></i> إعدادات حسابك</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                  </div>
+                </div>
+              </div>
+  <div class="container">
+    <h2 class="text-center" style="font-family: 'JF Flat Regular'">
+      <strong>المنتجات :</strong>
+      <%= shopuser.shoptitle %>
+    </h2>
+  <div class="card" style="width: 16rem;margin: 10px 0;">
+    <div class="view overlay">
+    <img class="card-img-top" src="https://cdn.glitch.com/21a72fd6-068d-4a10-8e19-b47ca3f12a74%2FUntitled.png?1548537719843" alt="STORE CAP">
+    <a href="#!">
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">خلفية رائعة !</h5>
+    <p class="card-text"><strong>البائع :</strong> NourEldien<br><strong>إسم المنتج :</strong> خلفية متحركة رائعة<br><strong>المبلغ :</strong> <span class="blue-text pb-2"><strong>$500</strong></span></p>
+    <a href="#" class="btn btn-primary">شراء !</a>
+  </div>
+</div>
+  </div>
+  
+<% include ../footer %>
+
+<% include ../scripts %>
+</body>
+
+</html>
